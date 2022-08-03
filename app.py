@@ -1,6 +1,6 @@
 """Blogly application."""
 
-from flask import Flask
+from flask import Flask, render_template
 from models import db, connect_db, User
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -22,6 +22,9 @@ def load_root_page():
 @app.get('/users')
 def render_main_page():
     """Show all users."""
+    all_users = User.query.all()
+    return render_template("users.html", users = all_users)
+breakpoint()
 
 @app.get('/users/new')
 def render_new_users_page():

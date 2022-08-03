@@ -9,7 +9,7 @@ Users
 
 <ul class="list-group">
   {% for user in users %}
-  <li class="list-group-item"><a href="/{{ user }}">{{ # }}</a></li>
+  <li class="list-group-item"><a href="/{{ user }}">{{ user.first_name }} {{ user.last_name }}</a></li>
   {% endfor %}
 </ul>
 
