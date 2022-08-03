@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
-{% block title %}
+{% block TITLE %}
 Users
 {% endblock %}
 
-{% Block Content %}
+{% block CONTENT %}
 <h1>Users</h1>
 
 <ul class="list-group">
   {% for user in users %}
-  <li class="list-group-item"><a href="/{{ user }}">{{ user.first_name }} {{ user.last_name }}</a></li>
+  <li class="list-group-item"><a >{{ user.first_name }} {{ user.last_name }}</a></li>
   {% endfor %}
 </ul>
 

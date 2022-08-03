@@ -1,6 +1,6 @@
 """Blogly application."""
 
-from flask import Flask, render_template
+from flask import Flask, redirect, render_template
 from models import db, connect_db, User
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -11,6 +11,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+
 connect_db(app)
 db.create_all()
 
@@ -18,13 +20,14 @@ db.create_all()
 @app.get('/')
 def load_root_page():
     """Redirect to list of users."""
+    
+    return redirect("/users")
 
 @app.get('/users')
 def render_main_page():
     """Show all users."""
     all_users = User.query.all()
-    return render_template("users.html", users = all_users)
-breakpoint()
+    return render_template("/users.html", users = all_users)
 
 @app.get('/users/new')
 def render_new_users_page():
