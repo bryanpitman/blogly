@@ -1,6 +1,6 @@
 """Blogly application."""
 
-from flask import Flask, redirect, render_template
+from flask import Flask, redirect, render_template, request
 from models import db, connect_db, User
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -32,10 +32,22 @@ def render_main_page():
 @app.get('/users/new')
 def render_new_users_page():
     """Show an add form for users"""
+    return render_template('/new_user.html')
 
 @app.post('/users/new')
 def add_new_user():
     """Process the add form, adding a new user and going back to /users"""
+    form_first_name = request.form['first-name']
+    form_last_name = request.form['last-name']
+    form_image_url = request.form['image-url']
+
+    new_user = User(first_name = form_first_name
+                    ,last_name = form_last_name,
+                    image_url = form_image_url)
+    db.session.add(new_user)
+    db.session.commit()
+    
+    return redirect ('/users')
 
 @app.get('/users/<int:user_id>')
 def render_user_page(user_id):
