@@ -13,3 +13,36 @@ app.config['SQLALCHEMY_ECHO'] = True
 
 connect_db(app)
 db.create_all()
+
+
+@app.get('/')
+def load_root_page():
+    """Redirect to list of users."""
+
+@app.get('/users')
+def render_main_page():
+    """Show all users."""
+
+@app.get('/users/new')
+def render_new_users_page():
+    """Show an add form for users"""
+
+@app.post('/users/new')
+def add_new_user():
+    """Process the add form, adding a new user and going back to /users"""
+
+@app.get('/users/<int:user_id>')
+def render_user_page(user_id):
+    """Show information about the given user."""
+
+@app.get('/users/<int:user_id>/edit')
+def render_edit_user_page():
+    """Show the edit page for a user."""
+
+@app.post('/users/<int:user_id>/edit')
+def process_edit_user ():
+    """Process the edit form, returning the user to the /users page."""
+
+@app.post('/users/<int:user_id>/delete')
+def delete_user():
+    """Delete the user."""
