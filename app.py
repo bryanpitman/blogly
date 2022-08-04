@@ -118,8 +118,30 @@ def handle_new_post(poster_id):
 @app.get('/posts/<int:post_id>')
 def render_post_detail(post_id):
     """Show a post. Show buttons to edit and delete the post."""
-    
+
     user_post = Post.query.get_or_404(post_id)
     user = user_post.user
-    
+
     return render_template('post_detail.html', user = user, user_post = user_post)
+
+@app.post('/posts/<int:post_id>/delete')
+def delete_post(post_id):
+    """Delete the post."""
+    user_post = Post.query.get_or_404(post_id)
+    user_id = user_post.user.id
+    db.session.delete(user_post)
+    db.session.commit()
+
+    return redirect(f'/users/{user_id}')
+
+
+@app.get('/posts/<int:post_id>/edit')
+def render_post_detail_edit(post_id):
+    """Show form to edit a post, and to cancel (back to user page)."""
+
+    user_post = Post.query.get_or_404(post_id)
+
+    return render_template('edit_post.html', user_post = user_post)
+
+
+
