@@ -9,6 +9,13 @@
   <title>{% block TITLE %}{% endblock %}</title>
 </head>
 <body class='container'>
+  <form>
+    <button class="btn btn-sm btn-outline-warning"
+            formaction="/"
+            formmethod="GET">
+      Home
+    </button>
+  </form>
   {% block CONTENT%}
   
   {% endblock %}

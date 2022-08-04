@@ -144,4 +144,14 @@ def render_post_detail_edit(post_id):
     return render_template('edit_post.html', user_post = user_post)
 
 
+@app.post('/posts/<int:post_id>/edit')
+def process_edit_post (post_id):
+    """Process the edit form, returning the user to the /users page."""
+    user_post = Post.query.get_or_404(post_id)
 
+    user_post.title = request.form['title']
+    user_post.content = request.form['content']
+
+    db.session.commit()
+
+    return redirect (f'/posts/{post_id}')
