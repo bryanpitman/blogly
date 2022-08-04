@@ -88,3 +88,12 @@ def delete_user(user_id):
     db.session.commit()
 
     return redirect('/users')
+
+@app.get('/users/<int:user_id>/add_post')
+def render_new_post(user_id):
+    """Show the new post page for a user."""
+    user = User.query.get_or_404(user_id)
+    return render_template('new_post.html', user = user)
+
+
+
