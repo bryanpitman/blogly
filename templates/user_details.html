@@ -6,16 +6,16 @@ Details
 
 {% block CONTENT %}
 
-<img class=".img-thumbnail" src="user.img_url" alt="users photo">
+<img class="img-thumbnail col-2" src="{{ user.image_url }}" alt="users photo">
 <h2>{{ user.first_name }} {{ user.last_name }}</h2>
-<!--//DONE: -->
+
 <form>
-  <button formaction="/users/{{user.id}}/edit/" 
-          formmethod="GET" 
+  <button formaction="/users/{{user.id}}/edit/"
+          formmethod="GET"
           class="btn btn-primary btn-sm col-1">Edit
   </button>
-  <button formaction="/users/{{user.id}}/delete" 
-         formmethod="POST" 
+  <button formaction="/users/{{user.id}}/delete"
+         formmethod="POST"
          class="btn btn-danger btn-sm col-1">Delete
       </button>
 </form>

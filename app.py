@@ -47,24 +47,24 @@ def add_new_user():
     db.session.add(new_user)
     db.session.commit()
 
-    return redirect ('/users')
+    return redirect ('/users/')
 
 @app.get('/users/<int:user_id>/')
 def render_user_page(user_id):
     """Show information about the given user."""
-    user = User.query.get(user_id)
+    user = User.query.get_or_404(user_id)
     return render_template('/user_details.html', user = user)
 
 @app.get('/users/<int:user_id>/edit/')
 def render_edit_user_page(user_id):
     """Show the edit page for a user."""
-    user = User.query.get(user_id)
+    user = User.query.get_or_404(user_id)
     return render_template('edit_user.html', user = user)
 
 @app.post('/users/<int:user_id>/edit/')
 def process_edit_user (user_id):
     """Process the edit form, returning the user to the /users page."""
-    user = User.query.get(user_id)
+    user = User.query.get_or_404(user_id)
 
     user.first_name = request.form['first-name']
     user.last_name = request.form['last-name']
@@ -76,7 +76,7 @@ def process_edit_user (user_id):
 @app.post('/users/<int:user_id>/delete/')
 def delete_user(user_id):
     """Delete the user."""
-    user = User.query.get(user_id)
+    user = User.query.get_or_404(user_id)
     db.session.delete(user)
     db.session.commit()
 
