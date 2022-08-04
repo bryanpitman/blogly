@@ -2,7 +2,7 @@
 
 from ast import Or
 from flask import Flask, redirect, render_template, request
-from models import db, connect_db, User
+from models import db, connect_db, User, DEFAULT_IMAGE_URL
 from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
@@ -70,8 +70,12 @@ def process_edit_user (user_id):
 
     user.first_name = request.form['first-name']
     user.last_name = request.form['last-name']
-    user.image_url = request.form['image-url']
-    # create an if statement
+
+    if request.form['image-url'] == '':
+        user.image_url = DEFAULT_IMAGE_URL
+    else:
+        user.image_url = request.form['image-url']
+
     db.session.commit()
 
     return redirect (f'/users/{user_id}')

@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-DEFAULT_IMAGE_URL = 'https://i.stack.imgur.com/l60Hf.png'
+DEFAULT_IMAGE_URL = 'https://images.unsplash.com/photo-1570116908808-4eeb66d9bb1e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80'
 
 def connect_db(app):
     """Connect to database."""
@@ -17,7 +17,6 @@ class User(db.Model):
 
     __tablename__ = 'users'
 
-# TODO: fix default image link
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
