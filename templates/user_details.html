@@ -7,6 +7,7 @@ Details
 {% block CONTENT %}
 
 <img class="img-thumbnail col-2" src="{{ user.image_url }}" alt="users photo">
+
 <h2>{{ user.first_name }} {{ user.last_name }}</h2>
 
 <form>
@@ -20,6 +21,14 @@ Details
       </button>
 </form>
 
+{% if user_posts[0] %}
+<h3 class="mt-3">Posts</h3>
+<ul>
+{% for post in user_posts %}
+  <li class="list-group-item"><a href="/users/{{user.id}}" >{{ post.title }}</a></li>
+  {% endfor %}
+</ul>
+{% endif %}
 
 <form>
   <button formaction="/users/{{user.id}}/posts/new"

@@ -55,7 +55,10 @@ def add_new_user():
 def render_user_page(user_id):
     """Show information about the given user."""
     user = User.query.get_or_404(user_id)
-    return render_template('/user_details.html', user = user)
+    user_posts = user.posts
+    return render_template('/user_details.html',
+                            user = user,
+                            user_posts = user_posts)
 
 @app.get('/users/<int:user_id>/edit')
 def render_edit_user_page(user_id):
@@ -110,5 +113,5 @@ def handle_new_post(poster_id):
     db.session.add(new_post)
     db.session.commit()
 
-    return redirect(f'/users/{poster_id}', user = user)
+    return redirect(f'/users/{poster_id}')
 
