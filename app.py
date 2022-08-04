@@ -115,3 +115,11 @@ def handle_new_post(poster_id):
 
     return redirect(f'/users/{poster_id}')
 
+@app.get('/posts/<int:post_id>')
+def render_post_detail(post_id):
+    """Show a post. Show buttons to edit and delete the post."""
+    
+    user_post = Post.query.get_or_404(post_id)
+    user = user_post.user
+    
+    return render_template('post_detail.html', user = user, user_post = user_post)
