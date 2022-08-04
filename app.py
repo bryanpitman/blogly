@@ -74,5 +74,12 @@ def process_edit_user (user_id):
     return redirect (f'/users/{user_id}/')
 
 @app.post('/users/<int:user_id>/delete/')
-def delete_user():
+def delete_user(user_id):
     """Delete the user."""
+    user = User.query.get(user_id)
+    db.session.delete(user)
+    db.session.commit()
+
+
+
+    return redirect('/users')
