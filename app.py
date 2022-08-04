@@ -2,7 +2,7 @@
 
 from ast import Or
 from flask import Flask, redirect, render_template, request
-from models import db, connect_db, User, DEFAULT_IMAGE_URL
+from models import db, connect_db, User, Post, DEFAULT_IMAGE_URL
 from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
@@ -43,8 +43,8 @@ def add_new_user():
     form_image_url = request.form['image-url'] or None
 
 
-    new_user = User(first_name = form_first_name
-                    ,last_name = form_last_name,
+    new_user = User(first_name = form_first_name,
+                    last_name = form_last_name,
                     image_url = form_image_url)
     db.session.add(new_user)
     db.session.commit()
@@ -89,11 +89,26 @@ def delete_user(user_id):
 
     return redirect('/users')
 
-@app.get('/users/<int:user_id>/add_post')
+@app.get('/users/<int:user_id>/posts/new')
 def render_new_post(user_id):
-    """Show the new post page for a user."""
+    """Show form to add a post for that user."""
     user = User.query.get_or_404(user_id)
     return render_template('new_post.html', user = user)
 
+@app.post('/users/<int:poster_id>/new_post')
+def handle_new_post(poster_id):
+    """Handle add form; add post and redirect to the user detail page.
+    """
+    user = User.query.get_or_404(poster_id)
 
+    form_title = request.form['title']
+    form_content = request.form['content']
+
+    new_post = Post(title = form_title,
+                    content = form_content,
+                    user_id = poster_id)
+    db.session.add(new_post)
+    db.session.commit()
+
+    return redirect(f'/users/{poster_id}', user = user)
 
