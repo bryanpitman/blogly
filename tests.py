@@ -59,7 +59,7 @@ class UserViewTestCase(TestCase):
 
     def test_list_users(self):
         with self.client as c:
-            resp = c.get("/users/")
+            resp = c.get("/users")
             self.assertEqual(resp.status_code, 200)
             html = resp.get_data(as_text=True)
             self.assertIn("test_first", html)
@@ -68,28 +68,28 @@ class UserViewTestCase(TestCase):
 
     def test_render_new_users_page(self):
         with self.client as c:
-            resp = c.get('/users/new/')
+            resp = c.get('/users/new')
             self.assertEqual(resp.status_code, 200)
             html = resp.get_data(as_text=True)
             self.assertIn("<h1>Create a user</h1>", html)
 
     def test_render_user_page(self):
         with self.client as c:
-            resp = c.get(f'/users/{self.user_id}/')
+            resp = c.get(f'/users/{self.user_id}')
             self.assertEqual(resp.status_code, 200)
             html = resp.get_data(as_text=True)
             self.assertIn('<h2>test_first test_last</h2>', html)
 
     def test_render_edit_user_page(self):
         with self.client as c:
-            resp = c.get(f'/users/{self.user_id}/edit/')
+            resp = c.get(f'/users/{self.user_id}/edit')
             self.assertEqual(resp.status_code, 200)
             html = resp.get_data(as_text=True)
             self.assertIn('<!-- thisisastringtotestheedituserroute -->', html)
 
     def test_add_new_user(self):
         with self.client as c:
-            resp = c.post(f'/users/new/',
+            resp = c.post(f'/users/new',
                             follow_redirects=True,
                             data={
                                    'first-name': 'new_first_name',
@@ -101,6 +101,7 @@ class UserViewTestCase(TestCase):
             html = resp.get_data(as_text=True)
             self.assertIn('<h1>Users</h1>', html)
             self.assertIn('new_first_name new_last_name</a></li>', html)
+            # TODO: add assert in IMG
 
 
 
