@@ -23,18 +23,18 @@ def load_root_page():
 
     return redirect("/users")
 
-@app.get('/users')
+@app.get('/users/')
 def render_main_page():
     """Show all users."""
     all_users = User.query.all()
     return render_template("/users.html", users = all_users)
 
-@app.get('/users/new')
+@app.get('/users/new/')
 def render_new_users_page():
     """Show an add form for users"""
     return render_template('/new_user.html')
 
-@app.post('/users/new')
+@app.post('/users/new/')
 def add_new_user():
     """Process the add form, adding a new user and going back to /users"""
     form_first_name = request.form['first-name']
@@ -49,24 +49,30 @@ def add_new_user():
 
     return redirect ('/users')
 
-@app.get('/users/<int:user_id>')
+@app.get('/users/<int:user_id>/')
 def render_user_page(user_id):
     """Show information about the given user."""
     user = User.query.get(user_id)
     return render_template('/user_details.html', user = user)
 
-@app.get('/users/<int:user_id>/edit')
+@app.get('/users/<int:user_id>/edit/')
 def render_edit_user_page(user_id):
     """Show the edit page for a user."""
     user = User.query.get(user_id)
     return render_template('edit_user.html', user = user)
 
-@app.post('/users/<int:user_id>/edit')
+@app.post('/users/<int:user_id>/edit/')
 def process_edit_user (user_id):
     """Process the edit form, returning the user to the /users page."""
     user = User.query.get(user_id)
-    return redirect (f'/users/{user_id}')
 
-@app.post('/users/<int:user_id>/delete')
+    user.first_name = request.form['first-name']
+    user.last_name = request.form['last-name']
+    user.image_url = request.form['image-url']
+    db.session.commit()
+
+    return redirect (f'/users/{user_id}/')
+
+@app.post('/users/<int:user_id>/delete/')
 def delete_user():
     """Delete the user."""
