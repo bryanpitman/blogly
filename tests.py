@@ -101,7 +101,7 @@ class UserViewTestCase(TestCase):
             html = resp.get_data(as_text=True)
             self.assertIn('<h1>Users</h1>', html)
             self.assertIn('new_first_name new_last_name</a></li>', html)
-            # TODO: add assert in IMG
+    
 
 
 
