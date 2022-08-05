@@ -102,11 +102,10 @@ def render_new_post(user_id):
 def handle_new_post(poster_id):
     """Handle add form; add post and redirect to the user detail page.
     """
-    user = User.query.get_or_404(poster_id)
 
     form_title = request.form['title']
     form_content = request.form['content']
-
+# TODO: change userid var
     new_post = Post(title = form_title,
                     content = form_content,
                     user_id = poster_id)
